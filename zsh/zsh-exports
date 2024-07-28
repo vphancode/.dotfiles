@@ -1,0 +1,22 @@
+#!/bin/sh
+
+#
+# Environment variables settings
+#
+
+
+export GOPATH=$HOME/go
+export PATH="$PATH:$HOME/bin:$GOPATH/bin"
+
+export EDITOR=vim
+export VISUAL="$EDITOR"
+export TERM=xterm-256color
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+export XDG_CONFIG_HOME="$HOME/.config"
+
+# fzf - fuzzy search
+export FZF_DEFAULT_OPTS='--extended'
+export FZF_DEFAULT_COMMAND='fd --type f'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+

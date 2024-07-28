@@ -1,0 +1,69 @@
+#!/bin/bash
+#
+# .zshrc configuration file for zsh (User profile)
+# .zshrc is initialized by /private/etc/zshrc (Global profile)
+#
+
+# History in cache directory:
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE=~/.cache/zsh/history
+setopt hist_expire_dups_first
+setopt hist_ignore_dups
+
+# Error without beep
+setopt NOBEEP
+
+# auto/tab complete:
+autoload -U compinit
+zstyle ':completion:*' menu select
+zmodload zsh/complist
+compinit
+_comp_options+=(globdots)		# Include hidden files.
+
+# amount of time to separated keypress
+export KEYTIMEOUT=1
+
+# color for ls output
+export LSCOLORS=ExGxBxDxCxDxExFxGx
+
+# Use vim keys in tab complete menu:
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -v '^?' backward-delete-char
+
+# Change cursor shape for different vi modes.
+function zle-keymap-select {
+  if [[ ${KEYMAP} == vicmd ]] ||
+     [[ $1 = 'block' ]]; then
+    echo -ne '\e[1 q'
+  elif [[ ${KEYMAP} == main ]] ||
+       [[ ${KEYMAP} == viins ]] ||
+       [[ ${KEYMAP} = '' ]] ||
+       [[ $1 = 'beam' ]]; then
+    echo -ne '\e[5 q'
+  fi
+}
+
+zle -N zle-keymap-select
+zle-line-init() {
+    zle -K viins
+    echo -ne "\e[5 q"
+}
+zle -N zle-line-init
+echo -ne '\e[5 q' # Use beam shape cursor on startup.
+preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
+
+# use special hook runs every time before executing each command
+function preexec() {
+    source "$HOME/.dotfiles/zsh/zsh-prompt" 2>/dev/null
+}
+
+# load plugins
+source "$HOME/.dotfiles/zsh/zsh-prompt" 2>/dev/null
+source "$HOME/.dotfiles/zsh/zsh-exports" 2>/dev/null
+source "$HOME/.dotfiles/zsh/zsh-alias" 2>/dev/null
+source "$HOME/.dotfiles/zsh/zsh-plugins" 2>/dev/null
+
