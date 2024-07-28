@@ -1,0 +1,87 @@
+#!/bin/sh
+
+################
+# Commons
+################
+
+alias ll='ls -alhG'
+alias ls='ls -a --color=auto'
+alias ps='ps -aux'
+alias tarz='tar czvf'
+alias taru='tar xzvf'
+alias df='df -h'
+alias cl='clear'
+
+alias tr2='tree --filesfirst -a -L 2'
+alias tr3='tree --filesfirst -a -L 3'
+alias tdu="tree --filesfirst --du  -h $1"
+
+# print $PATH prettier
+alias path='echo $PATH | sed s/:/\\n/g'
+
+# disply color code
+_colormap() {
+    for i in {0..255}; do print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+$'\n'}; done
+}
+alias colormap=_colormap
+
+# edit and load .zshrc
+alias ezh="vim $HOME/.zshrc"
+alias lzh="source $HOME/.zshrc"
+
+# dotfiles location
+alias dfi='cd $HOME/.dotfiles'
+
+# projects
+alias prj='cd $HOME/Desktop/github'
+
+#################
+# Networking
+#################
+
+# all the openning listening connections
+alias openPorts='sudo lsof -i | grep LISTENING'
+
+# all the current ip address v4
+alias ipa='ip -4 a | grep inet | awk '"'"'{print $NF " "  $2}'"'"' | column -t'
+
+# display ip4 connects to the internet
+_online() {
+    ip route get 8.8.8.8 | awk 'BEGIN {FS="src"} {print $2}' | cut -d' ' -f2
+}
+alias onl=_online
+
+# display gateway is used for the internet access
+_gateway() {
+    ip route get 8.8.8.8 | awk 'BEGIN {FS="via"} {print $2}' | cut -d' ' -f2
+}
+alias gw=_gateway
+
+# check the Internet status
+alias ping8='ping 8.8.8.8'
+alias ping9='ping 9.9.9.9'
+
+
+#################
+# Networking
+#################
+
+alias git='LC_ALL=en_US git'    # always use English
+
+
+
+
+
+#################
+# Date and Time
+#################
+
+alias weeknum='date +%V'
+
+#################
+# Misc
+################
+
+# youtube downnloader
+alias ytd="echo $1; yt-dlp -o '%(title)s.%(ext)s' $1 --restrict-filenames"
+

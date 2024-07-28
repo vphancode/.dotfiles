@@ -1,0 +1,46 @@
+#!/bin/sh
+#
+# zsh-prompt for formatting PS1
+#
+
+autoload -U colors && colors
+# PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
+
+# git branch name
+git_branch() {
+    # branch name will be display as '(master)'
+    # git branch --show-current 2>/dev/null | sed "s/^/\(/" | sed "s/$/\)/"
+
+    # without brackets
+    git branch --show-current 2>/dev/null | sed "s/^/  /" | sed "s/$/ → /"
+}
+
+# count modified files
+git_num_modified() {
+
+    _branch=$(git branch --show-current 2>/dev/null)
+    if [[ "$_branch" != "" ]]; then
+        git status --short | grep "^ M" | wc -l | sed "s/^[ \t]*//" | sed "s/^/M:/" | sed "s/$/ /"
+    fi
+}
+
+# count untracked files
+git_num_untracked() {
+
+    _branch=$(git branch --show-current 2>/dev/null)
+    if [[ "$_branch" != "" ]]; then
+        git status --short | grep "^??" | wc -l | sed "s/^[ \t]*//" | sed "s/\n//" | sed "s/^/U:/" | sed "s/$/ /"
+    fi
+}
+
+prompt_newline=$'\n%{\r%}'
+prompt_current_dir=' %1~ '
+prompt_fullpath_dir=' %~ '
+
+# Customize the prompt to include VCS info
+# PS1="%K{004}%F{white}$prompt_fullpath_dir%f%k%K{241}%F{red}$(git_branch)%f%k%K{239}%F{red}$(git_num_modified)$(git_num_untracked)%f%k $prompt_newline> "
+PS1="%B%K{004}%F{white}$prompt_fullpath_dir%k%K{002}%F{234}$(git_branch)%F{234}$(git_num_modified)$(git_num_untracked)%k%f $prompt_newline>%b "
+
+# Customize Right prompt - specify time at the right side
+# RPROMPT="%T"
+

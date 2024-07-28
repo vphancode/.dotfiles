@@ -1,0 +1,15 @@
+# zsh-plugins
+
+# source $HOME/.dotfiles/zsh/oh-my-zsh/powerlevel10k/powerlevel10k.zsh-theme
+# source $HOME/.dotfiles/zsh/oh-my-zsh/p10k.zsh
+
+# install zsh-autosuggestions
+source $HOME/.dotfiles/zsh/plugins/zsh-autosuggestions.zsh
+
+# install zsh-autocompletion
+source $HOME/.dotfiles/zsh/plugins/zsh-autcompletion.zsh
+
+# Load zsh-syntax-highlighting; should be last.
+source $HOME/.dotfiles/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+
