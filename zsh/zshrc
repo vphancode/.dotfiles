@@ -61,6 +61,10 @@ function preexec() {
     source "$HOME/.dotfiles/zsh/zsh-prompt" 2>/dev/null
 }
 
+function chpwd() {
+    source "$HOME/.dotfiles/zsh/zsh-prompt" 2>/dev/null
+}
+
 # load plugins
 source "$HOME/.dotfiles/zsh/zsh-prompt" 2>/dev/null
 source "$HOME/.dotfiles/zsh/zsh-exports" 2>/dev/null
